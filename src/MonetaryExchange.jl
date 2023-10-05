@@ -1,5 +1,8 @@
 module MonetaryExchange
 
-# Write your package code here.
+include("Utility.jl")
+include("Agent.jl")
+include("Group.jl")
+include("Process.jl")
 
-end
+end # module MonetaryExchange
