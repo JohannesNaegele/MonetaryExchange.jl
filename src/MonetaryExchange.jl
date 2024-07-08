@@ -6,6 +6,7 @@ export bounded_cobb_douglas
 include("Utility.jl")
 include("Agent.jl")
 include("Game.jl")
+include("Matching.jl")
 include("Process.jl")
 
 end # module MonetaryExchange

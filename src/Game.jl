@@ -2,8 +2,9 @@ import Base
 
 @Base.kwdef struct Group
     agents::Vector{Agent}
-    utility_mask
-    production
+    utility_mask # indices of relevant goods
+    production # this is the constant production vector for every period
+    decision_maker # this gives us consumption and excess demand as a function of inventory and prices
 end
 
 @Base.kwdef mutable struct Game

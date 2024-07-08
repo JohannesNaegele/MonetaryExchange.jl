@@ -1,17 +1,30 @@
 using Distributions
 
+# struct EmpiricalDistribution
+#     n
+# end
+
 """
-Return utility given an consumption vector. The mask ensures that only the relevant goods are fed into the utility function.
+Sample from the empirical distribution of prices. If no trade has ever taken, sample from  the prior of the agent.
 """
-function utility(agent::Agent, consumption, mask)
-    return agent.utility(consumption[mask])
+function sample_observed_price_dist(game::Game, agent::Agent, good)
+    n_trades = game.realized_trades[good]
+    if n_trades > 0
+        dist = DiscreteUniform(1, n_trades)
+        return game.realized_prices[rand(dist)]
+    else
+        return rand(agent.price_prior)
+    end
 end
 
 """
-Change the state of the game by going forward in time by amount `dt`.
+Change the state of the game by going forward in time by amount `dt`. The concrete type of matchings between the agents can be specified.
 """
-function step!(game::Game, dt)
+function step!(game::Game, dt, matching=sequential_matching)
+    # update_inventory!()
+    pairs = matching(game)
+    approximate_optimality!(game)
+    trade!(game, pairs)
 
-    util = utility(agent, cons, group.utility_mask)
     game.time += dt
 end
